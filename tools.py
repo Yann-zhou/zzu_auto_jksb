@@ -33,7 +33,7 @@ def get_signin_status():
     except TypeError:
         logger.error("获取打卡状态时出错：login的response中无ptopid或sid")
     sleep(3)
-    r = requests.get('https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb?ptopid='+ptopid+'&sid='+sid+'&fun2=')
+    r = requests.get('https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb?ptopid='+ptopid+'&sid='+sid+'&fun2=', verify=False)
     logger.debug("检查打卡状态模块：jksb页面返回值：ptopid="+ptopid+", sid="+sid)
     # 计算返回网页中对号的数量，为8则打卡成功，其他情况均未打卡成功
     if r.content.decode().count('ok2020.png') == 8:

@@ -16,24 +16,24 @@ logger = logging.getLogger('jksb')
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
 
+# 输出参数状态
+logger.info("脚本启动成功！请验证你的信息：")
+logger.info("学号：" + username)
+logger.info("密码：" + password)
+logger.info("省份编号：" + code_province)
+logger.info("城市编号：" + code_city)
+logger.info("详细位置：" + location)
+logger.info("疫苗情况：" + vaccine)
+logger.info("经度：" + jingdu)
+logger.info("纬度：" + weidu)
+logger.info("通知方法：" + send_type)
+logger.info("通知参数：" + send_parameter)
+
 
 def run():
-    # 输出参数状态
-    logger.info("脚本启动成功！请验证你的信息：")
-    logger.info("学号："+username)
-    logger.info("密码："+password)
-    logger.info("省份编号："+code_province)
-    logger.info("城市编号："+code_city)
-    logger.info("详细位置："+location)
-    logger.info("疫苗情况："+vaccine)
-    logger.info("经度："+jingdu)
-    logger.info("纬度："+weidu)
-    logger.info("通知方法："+send_type)
-    logger.info("通知参数："+send_parameter)
-    logger.info("正在检查是否已经打卡...")
-
     # 打卡进程
     try:
+        logger.info("正在检查是否已经打卡...")
         response_data = get_signin_status()
         if response_data[0] is True and logger_level is not logging.DEBUG:
             logger.info("今日已成功打卡！")
@@ -115,7 +115,7 @@ def run():
             logger.debug("打卡信息："+str(data_jksb))
             sleep(3)
             logger.info("正在提交打卡信息...")
-            response_data = requests.post(url_jksb, data=data_jksb, headers=header, verify=False)
+            response_data = requests.post(url=url_jksb, data=data_jksb, headers=header, verify=False)
             logger.info("提交打卡信息成功！")
             # ----------------------------结果返回页面----------------------------
             logger.info("正在查询打卡结果...")
