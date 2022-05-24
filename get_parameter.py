@@ -14,6 +14,7 @@ send_type = os.getenv('jksb_send_type')             # send_type可选bark,server
 send_parameter = os.getenv('jksb_send_parameter')   # send_type为email时，send_parameter应为json字符串，格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
 zhb_parameter = os.getenv('jksb_zhb_parameter')
 logger_level = os.getenv('jksb_logger_level')
+jksb_timer = os.getenv('jksb_timer')
 
 # 检查参数是否都有值
 if username is None:
