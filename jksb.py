@@ -14,7 +14,7 @@ logging.basicConfig(level=logger_level, format="%(asctime)s - %(name)s - [%(leve
 logger = logging.getLogger('jksb')
 # 忽略证书错误
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
+# requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
 
 # 输出参数状态
 logger.info("脚本启动成功！请验证你的信息：")

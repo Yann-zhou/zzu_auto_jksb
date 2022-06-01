@@ -13,7 +13,7 @@ from urllib.parse import quote
 logging.basicConfig(level=logger_level, format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
 logger = logging.getLogger('jksb_tools')
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions)
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
+# requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
 
 
 # 获取打卡状态的方法
