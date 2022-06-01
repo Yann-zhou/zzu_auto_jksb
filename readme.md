@@ -27,5 +27,5 @@ jksb_logger_level       日志等级
 
 ## 待添加功能
 - [x] 自动采集郑好办核酸检测信息
-- [ ] docker支持
+- [x] docker支持
 - [ ] Github Actions支持
