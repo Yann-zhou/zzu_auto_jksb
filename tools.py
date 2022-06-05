@@ -18,7 +18,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions)
 
 # 获取打卡状态的方法
 def get_signin_status():
-    loop_time = 3
+    loop_time = 6
     while loop_time > 0:
         data_login = {
             'uid': username,  # 此处填学号
@@ -30,9 +30,9 @@ def get_signin_status():
         try:
             r = requests.post(url=url_login, data=data_login, headers=header, verify=False)
         except TypeError:
-            logger.error("获取打卡状态时出错：登录页面ssl错误，3秒后重试...")
+            logger.error("获取打卡状态时出错：登录页面ssl错误，5秒后重试...")
             loop_time -= 1
-            sleep(3)
+            sleep(5)
             continue
         logger.debug("检查打卡状态模块：已获取login页返回值")
         try:
@@ -40,13 +40,15 @@ def get_signin_status():
             sid = re.search('(?<=sid=).*?(?=")', r.content.decode()).group()
         except TypeError:
             logger.error("获取打卡状态时出错：login的response中无ptopid或sid")
+        except AttributeError:
+            logger.error("获取打卡状态时出错：login的response中无ptopid或sid")
         sleep(3)
         try:
             r = requests.get(url='https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb?ptopid='+ptopid+'&sid='+sid+'&fun2=')
         except TypeError:
-            logger.error("获取打卡状态时出错：打卡信息页面ssl错误，3秒后重试...")
+            logger.error("获取打卡状态时出错：打卡信息页面ssl错误，5秒后重试...")
             loop_time -= 1
-            sleep(3)
+            sleep(5)
             continue
         logger.debug("检查打卡状态模块：jksb页面返回值：ptopid="+ptopid+", sid="+sid)
         # 计算返回网页中对号的数量，为8则打卡成功，其他情况均未打卡成功
@@ -57,7 +59,7 @@ def get_signin_status():
             logger.info("打卡状态：未打卡")
             return [False, r.content.decode()]
     if loop_time == 0:
-        raise "获取打卡状态时多次遭遇ssl错误！"
+        raise Exception("获取打卡状态时多次遭遇ssl错误！")
 
 
 # 获取郑好办核酸检测信息的方法
