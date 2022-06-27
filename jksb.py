@@ -5,7 +5,7 @@ import requests
 import logging
 
 from time import sleep
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+# from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 from get_parameter import *
 from tools import *
@@ -13,7 +13,7 @@ from tools import *
 logging.basicConfig(level=logger_level, format="%(asctime)s - %(name)s - [%(levelname)s] - %(message)s")
 logger = logging.getLogger('jksb')
 # 忽略证书错误
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 # requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT:@SECLEVEL=1'
 
 # 输出参数状态
@@ -68,7 +68,8 @@ def run():
             url_jksb_info = "https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb"
             sleep(3)
             logger.info("正在获取打卡页面表单数据...")
-            response_data = requests.post(url=url_jksb_info, data=data_jksb_info, headers=header, verify=False)
+            response_data = http.request(method='POST', url=url_jksb_info, body=urlencode(data_jksb_info), headers=header)
+            # response_data = requests.post(url=url_jksb_info, data=data_jksb_info, headers=header, verify=False)
             logger.info("成功获取打卡页面表单数据！")
             # ----------------------------提交信息页面----------------------------
             sheng6 = re.search('(?<=sheng6" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
@@ -115,7 +116,8 @@ def run():
             logger.debug("打卡信息："+str(data_jksb))
             sleep(3)
             logger.info("正在提交打卡信息...")
-            response_data = requests.post(url=url_jksb, data=data_jksb, headers=header, verify=False)
+            response_data = http.request(method='POST', url=url_jksb, body=urlencode(data_jksb), headers=header)
+            # response_data = requests.post(url=url_jksb, data=data_jksb, headers=header, verify=False)
             logger.info("提交打卡信息成功！")
             # ----------------------------结果返回页面----------------------------
             logger.info("正在查询打卡结果...")
