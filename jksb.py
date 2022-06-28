@@ -72,11 +72,11 @@ def run():
             # response_data = requests.post(url=url_jksb_info, data=data_jksb_info, headers=header, verify=False)
             logger.info("成功获取打卡页面表单数据！")
             # ----------------------------提交信息页面----------------------------
-            sheng6 = re.search('(?<=sheng6" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
-            shi6 = re.search('(?<=shi6" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
-            fun3 = re.search('(?<=fun3" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
-            ptopid = re.search('(?<=ptopid" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
-            sid = re.search('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data.content.decode())
+            sheng6 = re.search('(?<=sheng6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            shi6 = re.search('(?<=shi6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            fun3 = re.search('(?<=fun3" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            ptopid = re.search('(?<=ptopid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            sid = re.search('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
 
             data_jksb = {
                 'myvs_1': '否',  # 1. 您今天是否有发热症状?
@@ -124,7 +124,7 @@ def run():
             sleep(3)
             signin_result = get_signin_status()[0]
             if signin_result is True:
-                send_message(re.search('...同学.*?(?=<)', response_data.content.decode()).group())
+                send_message(re.search('...同学.*?(?=<)', response_data.data.decode()).group())
                 logger.info("打卡成功！")
             else:
                 send_message("打卡失败！")
