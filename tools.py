@@ -3,6 +3,7 @@ import urllib3
 from ssl import PROTOCOL_TLSv1_2
 import re
 from time import sleep
+from time import time
 from get_parameter import *
 import json
 import datetime
@@ -56,24 +57,22 @@ def get_zhb_status():
     try:
         if zhb_parameter is None:
             return 'y'
-        url_zhb = "https://check-report.z.digitalcnzz.com:5443/hs-check-result/check/result/queryWithToken"
-        data_zhb = zhb_parameter.encode('utf-8')
+        url_zhb = "https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info"
+        data_zhb = '{"param":"'+zhb_parameter+'","_t":'+int(time())+'}'
         header_zhb = {
             "Content-Type": "application/json;charset=utf-8",
-            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/19E258 ChannelId(3) NebulaSDK/1.8.100112 Nebula izzzwfwapp zhenghaoban/4.0.0 WK PSDType(1) mPaaSClient/11",
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/19F77 Ariver/1.1.0 AliApp(AP/10.2.76.6000) Nebula WK RVKType(1) AlipayDefined(nt:4G,ws:375|603|2.0) AlipayClient/10.2.76.6000 Alipay Language/zh-Hans Region/CN NebulaX/1.0.0",
             "Accept": "application/json, text/plain, */*",
-            "Host": "check-report.z.digitalcnzz.com:5443",
-            "Origin": "https://cdn.digitalcnzz.com",
-            "Accept-Language": "zh-CN,zh-Hans;q=0.9",
             "Accept-Encoding": "gzip, deflate, br",
-            "Authorization": "M7ZWXjmQrNEOIlRYYobnPEnK0mnhdfwC",
-            "Referer": "https://cdn.digitalcnzz.com/",
+            "Host": "unified-area-code-n-service.jianguan.henan.gov.cn",
+            "Origin": "https://unified-area-code-zwy.jianguan.henan.gov.cn",
+            "Referer": "https://unified-area-code-zwy.jianguan.henan.gov.cn/",
         }
 
         response_data = requests.post(url=url_zhb, data=data_zhb, headers=header_zhb)
         response_data_json = json.loads(response_data.content.decode())
-        report_date = datetime.datetime.strptime(response_data_json['data']['resultList'][0]['reportTime'], '%Y-%m-%d %H:%M:%S')
-        logger.debug("查询核酸检测结果模块：最新的报告日期为 "+response_data_json['data']['resultList'][0]['reportTime'])
+        report_date = datetime.datetime.strptime(response_data_json["obj"]["nucleicInfo"]["samplingTime"], '%Y-%m-%d %H:%M:%S')
+        logger.debug("查询核酸检测结果模块：最新的报告日期为 "+response_data_json["obj"]["nucleicInfo"]["samplingTime"])
         now_date = datetime.datetime.now()
         if (now_date - report_date).days > 0:
             logger.info('郑好办查询结果：昨日未做核酸')
