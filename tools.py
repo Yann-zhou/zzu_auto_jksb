@@ -54,11 +54,12 @@ def get_signin_status():
 
 # 获取郑好办核酸检测信息的方法
 def get_zhb_status():
+    result = 'y'
     try:
         if zhb_parameter is None:
-            return 'y'
+            return result
         url_zhb = "https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info"
-        data_zhb = '{"param":"'+zhb_parameter+'","_t":'+int(time())+'}'
+        data_zhb = '{"param":"'+zhb_parameter+'","_t":'+str(int(time()))+'}'
         header_zhb = {
             "Content-Type": "application/json;charset=utf-8",
             "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/19F77 Ariver/1.1.0 AliApp(AP/10.2.76.6000) Nebula WK RVKType(1) AlipayDefined(nt:4G,ws:375|603|2.0) AlipayClient/10.2.76.6000 Alipay Language/zh-Hans Region/CN NebulaX/1.0.0",
@@ -76,15 +77,15 @@ def get_zhb_status():
         now_date = datetime.datetime.now()
         if (now_date - report_date).days > 0:
             logger.info('郑好办查询结果：昨日未做核酸')
-            return 'x'
+            result = 'x'
         else:
             logger.info('郑好办查询结果：昨日已做核酸')
-            return 'y'
-    except:
+            result = 'y'
+    except Exception as err:
         send_message("郑好办查询失败！")
         logger.error("郑好办查询失败！")
     finally:
-        return 'y'
+        return result
 
 
 # 发送通知的方法
