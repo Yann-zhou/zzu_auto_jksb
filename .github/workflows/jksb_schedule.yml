@@ -1,0 +1,35 @@
+name: Start jksb
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '05 16,17,23 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Start zzu_auto_jksb
+      env:
+          jksb_username: ${{ secrets.username }}
+          jksb_password: ${{ secrets.password }}
+          jksb_code_province: ${{ secrets.province }}
+          jksb_code_city: ${{ secrets.city }}
+          jksb_location: ${{ secrets.location }}
+          jksb_vaccine: ${{ secrets.vaccine }}
+          jksb_jingdu: ${{ secrets.jingdu }}
+          jksb_weidu: ${{ secrets.weidu }}
+          jksb_send_type: ${{ secrets.send_type }}
+          jksb_send_parameter: ${{ secrets.send_parameter }}
+          jksb_zhb_parameter: ${{ secrets.zhb_parameter }}
+      run: |
+        python jksb.py

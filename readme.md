@@ -19,13 +19,14 @@ jksb_weidu              当前所在地纬度
 jksb_send_type          后续通知方法类型（可选bark,serverchan,email）
 jksb_send_parameter     根据send_type进行选择，
                         send_type为bark与serverchan时，该项为推送URL，
+                        send_type为serverchan时，该项为SCT开头的sendkey
                         send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
 jksb_zhb_parameter      郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
 jksb_logger_level       日志等级
 ```
 2. 调用jksb.py中的run方法即可运行
 
-## 待添加功能
-- [x] 自动采集郑好办核酸检测信息
+## ~~待添加功能~~
+- [x] 自动采集郑好办核酸检测信息(不稳定)
 - [x] docker支持
-- [ ] Github Actions支持
+- [x] Github Actions支持
