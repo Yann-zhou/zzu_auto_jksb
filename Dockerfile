@@ -6,7 +6,7 @@ ADD ./*.py /code/
 # 将项目依赖添加到镜像
 ADD requirements.txt /code/
 WORKDIR /code
-RUN pip install -U pip && \
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple -U pip && \
     pip config set global.index-url http://mirrors.aliyun.com/pypi/simple && \
     pip config set install.trusted-host mirrors.aliyun.com && \
     pip install -r requirements.txt
