@@ -6,7 +6,10 @@ ADD ./*.py /code/
 # 将项目依赖添加到镜像
 ADD requirements.txt /code/
 WORKDIR /code
-RUN pip install -r requirements.txt
+RUN pip install -U pip && \
+    pip config set global.index-url http://mirrors.aliyun.com/pypi/simple && \
+    pip config set install.trusted-host mirrors.aliyun.com && \
+    pip install -r requirements.txt
 # 设置该项以忽略证书错误（alpine镜像内不存在该文件，暂时舍弃该命令）
 # RUN sed -i -E 's/MinProtocol[=\ ]+.*/MinProtocol = TLSv1.0/g' /etc/ssl/openssl.cnf
 
