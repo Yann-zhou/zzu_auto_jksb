@@ -6,9 +6,9 @@ ADD ./*.py /code/
 # 将项目依赖添加到镜像
 ADD requirements.txt /code/
 WORKDIR /code
-RUN pip install -r requirements.txt && \
-    # 设置该项以忽略证书错误
-    sed -i -E 's/MinProtocol[=\ ]+.*/MinProtocol = TLSv1.0/g' /etc/ssl/openssl.cnf
+RUN pip install -r requirements.txt
+# 设置该项以忽略证书错误（alpine镜像内不存在该文件，暂时舍弃该命令）
+# RUN sed -i -E 's/MinProtocol[=\ ]+.*/MinProtocol = TLSv1.0/g' /etc/ssl/openssl.cnf
 
 # 调整时间
 ENV TZ=Asia/Shanghai \
