@@ -75,7 +75,7 @@ def get_zhb_status():
         report_date = datetime.datetime.strptime(response_data_json["obj"]["nucleicInfo"]["samplingTime"], '%Y-%m-%d %H:%M:%S')
         logger.debug("查询核酸检测结果模块：最新的报告日期为 "+response_data_json["obj"]["nucleicInfo"]["samplingTime"])
         now_date = datetime.datetime.now()
-        if (now_date - report_date).days > 0:
+        if (now_date - report_date).days > 1:
             logger.info('郑好办查询结果：昨日未做核酸')
             result = 'x'
         else:
