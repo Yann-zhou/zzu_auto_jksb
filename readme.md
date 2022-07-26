@@ -30,6 +30,7 @@ jksb_logger_level       （可选）日志等级
 
 ### 使用docker容器
 本项目已构建完成amd64与适用于树莓派4B的armv8架构的docker镜像，使用以下命令可以启动docker容器
+
 参数填写规则请参考[参数填写详细规则](#1)
 ```bash
 docker run -d -e jksb_username=学号 \
@@ -57,6 +58,7 @@ docker build -t 镜像名:版本号 .
 
 ### 使用GitHub Actions
 本仓库内已集成GitHub Actions配置文件，您只需配置以下Secrets即可在每日0点5分、1点5分、7点5分进行自动打卡
+
 参数填写规则请参考[参数填写详细规则](#1)
 ```
 username: 学号
