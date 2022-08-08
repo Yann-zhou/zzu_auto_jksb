@@ -124,7 +124,7 @@ def run():
             sleep(3)
             signin_result = get_signin_status()[0]
             if signin_result is True:
-                send_message(re.search('...同学.*?(?=<)', response_data.data.decode()).group())
+                send_message(re.search('同学.*?(?=<)', response_data.data.decode()).group())
                 logger.info("打卡成功！")
             else:
                 send_message("打卡失败！")
