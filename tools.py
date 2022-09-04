@@ -130,3 +130,28 @@ def send_message(message: str):
     else:
         logger.warning('未设置通知方法，待通知消息为：' + message)
 
+
+def detect_CAPTCHA(url: str):
+    acc_token = json.loads(
+        requests.get(
+            url='https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id='+baidu_API_Key+'&client_secret='+baidu_Secret_Key,
+            headers=header
+        ).text)['access_token']
+
+    CAPTCHA = ""
+    times = 0
+    while len(CAPTCHA) != 4 and times < 5:
+        CAPTCHA = ""
+        response_data = requests.post(
+            url="https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic?access_token="+acc_token,
+            data="url="+url,
+            headers=header)
+        response_json = json.loads(response_data.text)
+        times += 1
+        if response_json["words_result_num"] is not 1:
+            continue
+        for i in response_json["words_result"][0]["words"]:
+            if "0" <= i <= "9":
+                CAPTCHA += i
+    logger.info("本次打卡验证码为："+CAPTCHA)
+    return CAPTCHA
