@@ -74,11 +74,16 @@ def run():
             # ----------------------------提交信息页面----------------------------
             sheng6 = re.search('(?<=sheng6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             shi6 = re.search('(?<=shi6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            fun118 = re.search('(?<=fun118" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode()).group()
             fun3 = re.search('(?<=fun3" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             ptopid = re.search('(?<=ptopid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             sid = re.search('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
+            CAPTCHA_url = re.search('(?<=<img src=").*?zzjlogin3d.*?p2p=.*?(?=")', response_data.data.decode())
+            logger.debug("页面中fun118参数值为："+fun118)
+            logger.debug("验证码链接为："+CAPTCHA_url.group())
 
             data_jksb = {
+                'myvs_94c': detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
                 'myvs_1': '否',  # 1. 您今天是否有发热症状?
                 'myvs_2': '否',  # 2. 您今天是否有咳嗽症状?
                 'myvs_3': '否',  # 3. 您今天是否有乏力或轻微乏力症状?
@@ -87,7 +92,7 @@ def run():
                 # 'myvs_6': '否',  # 6. 您今天是否被所在地医疗机构确定为疑似病例?    #已弃用
                 'myvs_7': '否',  # 6. 您是否被所在地政府确定为密切接触者?
                 'myvs_8': '否',  # 7. 您是否被所在地政府确定为次密切?
-                'myvs_9': get_zhb_status(),  # 8. **************您昨天是否按要求参加了核酸检测?（此项从郑好办处获取）
+                # 'myvs_9': get_zhb_status(),  # 8. **************您昨天是否按要求参加了核酸检测?（此项从郑好办处获取）
                 # 'myvs_10': '否',  # 9. 您今天是否被所在地医疗机构进行院内隔离观察治疗?    #已弃用
                 'myvs_11': '否',  # 9. 您今天是否被所在地医疗机构进行院内隔离观察治疗?
                 'myvs_12': '否',  # 10. 您今天是否被要求在政府集中隔离点进行隔离观察?
@@ -105,7 +110,7 @@ def run():
                 'men6': 'a',
                 'sheng6': sheng6.group() if sheng6 else None,  # 此项从上方返回中找值
                 'shi6': shi6.group() if shi6 else None,  # 此项从上方返回中找值
-                'fun18': fun18,  # 此项从上方返回中找值
+                'fun118': fun118,  # 此项从上方返回中找值
                 'fun3': fun3.group() if fun3 else None,  # 此项从上方返回中找值
                 'jingdu': jingdu,  # **************此项填所在地经度
                 'weidu': weidu,  # **************此项填所在地纬度
