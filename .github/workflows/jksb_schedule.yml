@@ -31,5 +31,7 @@ jobs:
           jksb_send_type: ${{ secrets.send_type }}
           jksb_send_parameter: ${{ secrets.send_parameter }}
           jksb_zhb_parameter: ${{ secrets.zhb_parameter }}
+          jksb_baidu_API_Key: ${{ secrets.baidu_API_Key }}
+          jksb_baidu_Secret_Key: ${{ secrets.baidu_Secret_Key }}
       run: |
         python jksb.py

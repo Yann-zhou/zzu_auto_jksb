@@ -5,8 +5,12 @@
 该项目可以帮助你自动进行每日健康上报，项目使用python作为后台，只需简单配置即可自动运行，~~后续准备添加docker与Github Actions支持~~  
 已添加docker与GitHub Actions支持
 
-### 2022.09.04待更新
-2022.09.04打卡系统添加了验证码，计划使用百度云API进行在线识别，该功能待添加……
+---
+### 更新日志
+
+- 2022.09.04 打卡系统添加了验证码，计划使用百度云API进行在线识别，~~该功能待添加……~~（已经更新该功能）
+
+---
 
 ## 使用方法
 ### 直接调用原始文件
@@ -25,7 +29,9 @@ jksb_send_parameter     根据send_type进行选择，
                         send_type为bark时，该项为推送URL，
                         send_type为serverchan时，该项为SCT开头的sendkey
                         send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
-jksb_zhb_parameter      （可选）郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
+jksb_baidu_API_Key      百度通用文字识别-高精度版APIKey
+jksb_baidu_Secret_Key   百度通用文字识别-高精度版SecretKey
+jksb_zhb_parameter      （已被打卡系统废弃）郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
 jksb_logger_level       （可选）日志等级
 ```
 参数填写规则请参考[参数填写详细规则](#1)
@@ -75,7 +81,9 @@ jingdu: 经度
 weidu: 纬度
 send_type: 通知类型
 send_parameter: 通知参数
-zhb_parameter: （可选）郑好办查询参数
+zhb_parameter: （已被打卡系统废弃）郑好办查询参数
+baidu_API_Key:      百度通用文字识别-高精度版APIKey
+baidu_Secret_Key:   百度通用文字识别-高精度版SecretKey
 ```
 
 <div id="1"></div>
@@ -92,7 +100,9 @@ zhb_parameter: （可选）郑好办查询参数
 send_type为bark与serverchan时，该项为推送URL，  
 send_type为serverchan时，该项为SCT开头的sendkey  
 send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}  
-- zhb_parameter相关参数：默认情况下，脚本会将核算监测情况填写为“做了”，如您想自动采集核酸检测信息，请使用fiddler抓取您使用手机扫描任一场所码时对URL `https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info` 发送的请求中"param"项的参数填到此处即可。
+- ~~zhb_parameter相关参数：默认情况下，脚本会将核算监测情况填写为“做了”，如您想自动采集核酸检测信息，请使用fiddler抓取您使用手机扫描任一场所码时对URL `https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info` 发送的请求中"param"项的参数填到此处即可。~~
+- baidu_API_Key      百度通用文字识别-高精度版APIKey  
+  baidu_Secret_Key   百度通用文字识别-高精度版SecretKey
 
 ## ~~待添加功能~~
 - [x] 自动采集郑好办核酸检测信息(不稳定)
