@@ -140,6 +140,7 @@ def detect_CAPTCHA(url: str):
 
     CAPTCHA = ""
     times = 0
+    nums = {"零": 0, "壹": 1, "贰": 2, "叁": 3, "肆": 4, "伍": 5, "陆": 6, "柒": 7, "捌": 8, "玖": 9}
     while len(CAPTCHA) != 4 and times < 5:
         CAPTCHA = ""
         response_data = requests.post(
@@ -153,5 +154,7 @@ def detect_CAPTCHA(url: str):
         for i in response_json["words_result"][0]["words"]:
             if "0" <= i <= "9":
                 CAPTCHA += i
+            if i in nums:
+                CAPTCHA += str(nums[i])
     logger.info("本次打卡验证码为："+CAPTCHA)
     return CAPTCHA
