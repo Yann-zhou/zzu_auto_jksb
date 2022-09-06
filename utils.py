@@ -4,7 +4,7 @@ from ssl import PROTOCOL_TLSv1_2
 import re
 from time import sleep
 from time import time
-from get_parameter import *
+from parameter import *
 import json
 import datetime
 
@@ -104,18 +104,18 @@ def send_message(message: str):
     elif send_type == 'email':
         # send_parameter应为json字符串，格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
         try:
-            parameter = json.loads(send_parameter)
-            mail_host = parameter['host']  # 设置服务器
-            mail_user = parameter['user']  # 用户名
-            mail_pass = parameter['password']  # 口令
+            par = json.loads(send_parameter)
+            mail_host = par['host']  # 设置服务器
+            mail_user = par['user']  # 用户名
+            mail_pass = par['password']  # 口令
 
-            sender = parameter['user']
-            receivers = [parameter['receiver']]
+            sender = par['user']
+            receivers = [par['receiver']]
             logger.info(receivers)
 
             message_mime = MIMEText(message, 'plain', 'utf-8')
-            message_mime['From'] = Header(parameter['user'], 'utf-8')
-            message_mime['To'] = Header(parameter['receiver'], 'utf-8')
+            message_mime['From'] = Header(par['user'], 'utf-8')
+            message_mime['To'] = Header(par['receiver'], 'utf-8')
 
             message_mime['Subject'] = Header("健康上报结果", 'utf-8')
 

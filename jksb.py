@@ -7,8 +7,8 @@ import logging
 from time import sleep
 # from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from get_parameter import *
-from tools import *
+from parameter import *
+import utils
 
 logging.basicConfig(level=logger_level, format="%(asctime)s - %(name)s - [%(levelname)s] - %(message)s")
 logger = logging.getLogger('jksb')
@@ -34,7 +34,7 @@ def run():
     # 打卡进程
     try:
         logger.info("正在检查是否已经打卡...")
-        response_data = get_signin_status()
+        response_data = utils.get_signin_status()
         if response_data[0] is True and logger_level is not logging.DEBUG:
             logger.info("今日已成功打卡！")
         else:
@@ -68,7 +68,7 @@ def run():
             url_jksb_info = "https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb"
             sleep(3)
             logger.info("正在获取打卡页面表单数据...")
-            response_data = http.request(method='POST', url=url_jksb_info, body=urlencode(data_jksb_info), headers=header)
+            response_data = utils.http.request(method='POST', url=url_jksb_info, body=utils.urlencode(data_jksb_info), headers=header)
             # response_data = requests.post(url=url_jksb_info, data=data_jksb_info, headers=header, verify=False)
             logger.info("成功获取打卡页面表单数据！")
             # ----------------------------提交信息页面----------------------------
@@ -83,7 +83,7 @@ def run():
             logger.debug("验证码链接为："+CAPTCHA_url.group())
 
             data_jksb = {
-                'myvs_94c': detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
+                'myvs_94c': utils.detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
                 'myvs_1': '否',  # 1. 您今天是否有发热症状?
                 'myvs_2': '否',  # 2. 您今天是否有咳嗽症状?
                 'myvs_3': '否',  # 3. 您今天是否有乏力或轻微乏力症状?
@@ -121,21 +121,21 @@ def run():
             logger.debug("打卡信息："+str(data_jksb))
             sleep(3)
             logger.info("正在提交打卡信息...")
-            response_data = http.request(method='POST', url=url_jksb, body=urlencode(data_jksb), headers=header)
+            response_data = utils.http.request(method='POST', url=url_jksb, body=utils.urlencode(data_jksb), headers=header)
             # response_data = requests.post(url=url_jksb, data=data_jksb, headers=header, verify=False)
             logger.info("提交打卡信息成功！")
             # ----------------------------结果返回页面----------------------------
             logger.info("正在查询打卡结果...")
             sleep(3)
-            signin_result = get_signin_status()[0]
+            signin_result = utils.get_signin_status()[0]
             if signin_result is True:
-                send_message(re.search('同学.*?(?=<)', response_data.data.decode()).group())
+                utils.send_message(re.search('同学.*?(?=<)', response_data.data.decode()).group())
                 logger.info("打卡成功！")
             else:
-                send_message("打卡失败！")
+                utils.send_message("打卡失败！")
                 logger.error("打卡失败！")
     except Exception as err:
-        send_message("程序运行异常！错误信息："+str(err))
+        utils.send_message("程序运行异常！错误信息："+str(err))
 
 
 if __name__ == '__main__':
