@@ -20,18 +20,18 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Start zzu_auto_jksb
       env:
-          jksb_username: ${{ secrets.username }}
-          jksb_password: ${{ secrets.password }}
-          jksb_code_province: ${{ secrets.province }}
-          jksb_code_city: ${{ secrets.city }}
-          jksb_location: ${{ secrets.location }}
-          jksb_vaccine: ${{ secrets.vaccine }}
-          jksb_jingdu: ${{ secrets.jingdu }}
-          jksb_weidu: ${{ secrets.weidu }}
-          jksb_send_type: ${{ secrets.send_type }}
-          jksb_send_parameter: ${{ secrets.send_parameter }}
-          jksb_zhb_parameter: ${{ secrets.zhb_parameter }}
-          jksb_baidu_API_Key: ${{ secrets.baidu_API_Key }}
-          jksb_baidu_Secret_Key: ${{ secrets.baidu_Secret_Key }}
+          jksb_username: ${{ secrets.jksb_username }}
+          jksb_password: ${{ secrets.jksb_password }}
+          jksb_code_province: ${{ secrets.jksb_code_province }}
+          jksb_code_city: ${{ secrets.jksb_code_city }}
+          jksb_location: ${{ secrets.jksb_location }}
+          jksb_vaccine: ${{ secrets.jksb_vaccine }}
+          jksb_jingdu: ${{ secrets.jksb_jingdu }}
+          jksb_weidu: ${{ secrets.jksb_weidu }}
+          jksb_send_type: ${{ secrets.jksb_send_type }}
+          jksb_send_parameter: ${{ secrets.jksb_send_parameter }}
+          jksb_baidu_API_Key: ${{ secrets.jksb_baidu_API_Key }}
+          jksb_baidu_Secret_Key: ${{ secrets.jksb_baidu_Secret_Key }}
+          jksb_zhb_parameter: ${{ secrets.jksb_zhb_parameter }}
       run: |
         python jksb.py
