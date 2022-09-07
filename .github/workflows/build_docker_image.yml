@@ -35,6 +35,6 @@ jobs:
             APP_VERSION=${{ env.APP_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-        - name: Build and push arm64 Docker image
-          uses: actions/checkout@v3
-          run: docker buildx build --file ./Dockerfile_arm --platform linux/arm64/v8 -t yannzhou/zzu_auto_jksb:latest . --push
+      - name: Build and push arm64 Docker image
+        uses: actions/checkout@v3
+        run: docker buildx build --file ./Dockerfile_arm --platform linux/arm64/v8 -t yannzhou/zzu_auto_jksb:latest . --push
