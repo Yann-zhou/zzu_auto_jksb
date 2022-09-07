@@ -6,7 +6,8 @@ ADD ./*.py /code/
 # 将项目依赖添加到镜像
 ADD requirements.txt /code/
 WORKDIR /code
-RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ -U pip && \
+RUN apt-get update && apt-get install -y ruby zlib1g zlib1g.dev libjpeg-dev&& \
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -U pip && \
     pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
     pip install -r requirements.txt
 # 设置该项以忽略证书错误（alpine镜像内不存在该文件，暂时舍弃该命令）
