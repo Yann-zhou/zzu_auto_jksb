@@ -14,6 +14,10 @@ from email.header import Header
 from urllib.parse import quote
 from urllib.parse import urlencode
 
+from PIL import Image
+from io import BytesIO
+from base64 import b64encode
+
 logging.basicConfig(level=logger_level, format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
 logger = logging.getLogger('jksb_tools')
 urllib3.disable_warnings()
@@ -131,7 +135,8 @@ def send_message(message: str):
         logger.warning('未设置通知方法，待通知消息为：' + message)
 
 
-def detect_CAPTCHA(url: str):
+# 简单文字识别，现在打卡系统已升级为手写问题，该方法暂时废弃
+def detect_CAPTCHA_ez(url: str):
     acc_token = json.loads(
         requests.get(
             url='https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id='+baidu_API_Key+'&client_secret='+baidu_Secret_Key,
@@ -157,4 +162,62 @@ def detect_CAPTCHA(url: str):
             if i in nums:
                 CAPTCHA += str(nums[i])
     logger.info("本次打卡验证码为："+CAPTCHA)
+    return CAPTCHA
+
+
+# 手写文字验证码识别
+def detect_CAPTCHA(url: str):
+    CAPTCHA = ""
+    acc_token = json.loads(
+        requests.get(
+            url='https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=' + baidu_API_Key + '&client_secret=' + baidu_Secret_Key,
+            headers=header
+        ).text)['access_token']
+
+    nums = {"零": 0, "壹": 1, "贰": 2, "叁": 3, "肆": 4, "伍": 5, "陆": 6, "柒": 7, "捌": 8, "玖": 9}
+    response_data = requests.post(
+        url="https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting?access_token=" + acc_token,
+        data="url=" + url,
+        headers=header)
+    response_json = json.loads(response_data.text)
+    for i in response_json["words_result"][0]["words"]:
+        if "0" <= i <= "9":
+            CAPTCHA += i
+        if i in nums:
+            CAPTCHA += str(nums[i])
+
+    # 如果识别不成功，将图片放大并二值化后再次进行尝试
+    if len(CAPTCHA) != 4:
+        def pil2base64(image):
+            img_buffer = BytesIO()
+            image.save(img_buffer, format='JPEG')
+            byte_data = img_buffer.getvalue()
+            base64_str = b64encode(byte_data)
+            return base64_str
+
+        CAPTCHA = ""
+        img = BytesIO(requests.get(url).content)
+        img = Image.open(img)
+
+        threshold = 183
+        table = []
+        for i in range(256):
+            if i < threshold:
+                table.append(0)
+            else:
+                table.append(1)
+        img_base64_urlencode = quote(pil2base64(img.convert('L').resize((880, 220)).point(table, '1')))
+
+        response_data = requests.post(
+            url="https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting?access_token=" + acc_token,
+            data="image=" + img_base64_urlencode,
+            headers=header)
+        response_json = json.loads(response_data.text)
+        for i in response_json["words_result"][0]["words"]:
+            if "0" <= i <= "9":
+                CAPTCHA += i
+            if i in nums:
+                CAPTCHA += str(nums[i])
+
+    logger.info("本次打卡验证码为：" + CAPTCHA)
     return CAPTCHA

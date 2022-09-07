@@ -1,7 +1,7 @@
 import datetime
 import time
 from apscheduler.schedulers.blocking import BlockingScheduler
-from get_parameter import jksb_timer, logger_level
+from parameter import jksb_timer, logger_level
 import jksb
 import logging
 

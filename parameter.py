@@ -44,7 +44,6 @@ if baidu_API_Key is None:
 if baidu_Secret_Key is None:
     raise Exception("参数jksb_baidu_Secret_Key无值")
 
-logger_level = 'DEBUG'
 # 设置日志等级
 if logger_level == 'DEBUG':
     logger_level = logging.DEBUG

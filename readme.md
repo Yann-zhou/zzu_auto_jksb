@@ -10,6 +10,7 @@
 
 - 2022.09.04 打卡系统添加了验证码，计划使用百度云API进行在线识别，~~该功能待添加……~~（已经更新该功能）
 - 2022.09.06 打卡系统添加汉语验证码，添加汉语大写数字识别功能
+- 2022.09.07 打卡系统验证码变更为了手写汉字，增加对应的手写汉字识别功能
 
 ---
 
@@ -30,8 +31,8 @@ jksb_send_parameter     根据send_type进行选择，
                         send_type为bark时，该项为推送URL，
                         send_type为serverchan时，该项为SCT开头的sendkey
                         send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
-jksb_baidu_API_Key      百度通用文字识别-高精度版APIKey
-jksb_baidu_Secret_Key   百度通用文字识别-高精度版SecretKey
+jksb_baidu_API_Key      百度手写文字识别APIKey
+jksb_baidu_Secret_Key   百度手写文字识别SecretKey
 jksb_zhb_parameter      （已被打卡系统废弃）郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
 jksb_logger_level       （可选）日志等级
 ```
@@ -55,6 +56,8 @@ docker run -d -e jksb_username=学号 \
               -e jksb_send_type=通知类型 \
               -e jksb_send_parameter=通知参数 \
               -e jksb_timer=运行时间 \
+              -e jksb_baidu_API_Key=百度手写文字识别APIKey \
+              -e jksb_baidu_Secret_Key=百度手写文字识别SecretKey \
               yannzhou/zzu_auto_jksb:latest
 ```
 如您想自己构建docker镜像：
@@ -83,8 +86,8 @@ weidu: 纬度
 send_type: 通知类型
 send_parameter: 通知参数
 zhb_parameter: （已被打卡系统废弃）郑好办查询参数
-baidu_API_Key:      百度通用文字识别-高精度版APIKey
-baidu_Secret_Key:   百度通用文字识别-高精度版SecretKey
+baidu_API_Key:      百度手写文字识别APIKey
+baidu_Secret_Key:   百度手写文字识别SecretKey
 ```
 
 <div id="1"></div>
@@ -102,8 +105,8 @@ send_type为bark与serverchan时，该项为推送URL，
 send_type为serverchan时，该项为SCT开头的sendkey  
 send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}  
 - ~~zhb_parameter相关参数：默认情况下，脚本会将核算监测情况填写为“做了”，如您想自动采集核酸检测信息，请使用fiddler抓取您使用手机扫描任一场所码时对URL `https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info` 发送的请求中"param"项的参数填到此处即可。~~
-- baidu_API_Key      百度通用文字识别-高精度版APIKey  
-  baidu_Secret_Key   百度通用文字识别-高精度版SecretKey
+- baidu_API_Key      百度手写文字识别APIKey  
+  baidu_Secret_Key   百度手写文字识别SecretKey
 
 ## ~~待添加功能~~
 - [x] 自动采集郑好办核酸检测信息(不稳定)
