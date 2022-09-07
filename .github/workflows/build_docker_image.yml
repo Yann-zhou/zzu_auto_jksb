@@ -36,4 +36,4 @@ jobs:
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
       - name: Build and push arm64 Docker image
-        run: docker buildx build --file ./Dockerfile_arm --platform linux/arm64/v8 -t yannzhou/zzu_auto_jksb:latest . --push
+        run: docker buildx build --file ./Dockerfile_arm --platform linux/arm64/v8 -t yannzhou/zzu_auto_jksb:arm64 . --push
