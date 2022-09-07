@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build Docker Image
 on:
   push:
     branches:
@@ -14,26 +14,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push amd64 Docker Image
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
           platforms: |
             linux/amd64
-            linux/arm64/v8
           build-args: |
             APP_NAME=${{ env.APP_NAME }}
             APP_VERSION=${{ env.APP_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
+
+        - name: Build and push arm64 Docker image
+        - uses: actions/checkout@v3
+          run: docker buildx build --file ./Dockerfile_arm --platform linux/arm64/v8 -t yannzhou/zzu_auto_jksb:latest . --push

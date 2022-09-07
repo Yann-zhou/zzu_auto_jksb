@@ -1,5 +1,10 @@
 # ZZU_auto_jksb
 
+[![Build Docker Image](https://github.com/Yann-zhou/zzu_auto_jksb/actions/workflows/build_docker_image.yml/badge.svg)](https://github.com/Yann-zhou/zzu_auto_jksb/actions/workflows/build_docker_image.yml)
+![watchers](https://img.shields.io/github/watchers/Yann-zhou/zzu_auto_jksb)
+![forks](https://img.shields.io/github/forks/Yann-zhou/zzu_auto_jksb)
+![stars](https://img.shields.io/github/stars/Yann-zhou/zzu_auto_jksb)
+
 ## 一、项目简介
 
 该项目可以帮助你自动进行每日健康上报，项目使用python作为后台，只需简单配置即可自动运行，已添加docker与GitHub Actions支持  

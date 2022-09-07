@@ -6,6 +6,8 @@ ADD ./*.py /code/
 # 将项目依赖添加到镜像
 ADD requirements.txt /code/
 WORKDIR /code
+RUN apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl && \
+    add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
 RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ -U pip && \
     pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
     pip install -r requirements.txt
