@@ -83,7 +83,7 @@ def run():
             logger.debug("验证码链接为："+CAPTCHA_url.group())
 
             data_jksb = {
-                'myvs_94c': utils.detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
+                # 'myvs_94c': utils.detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
                 'myvs_1': '否',  # 1. 您今天是否有发热症状?
                 'myvs_2': '否',  # 2. 您今天是否有咳嗽症状?
                 'myvs_3': '否',  # 3. 您今天是否有乏力或轻微乏力症状?
@@ -102,7 +102,7 @@ def run():
                 'myvs_13b': code_city,  # **************当前实际所在地（请在平台自行查阅地点代码）
                 'myvs_13c': location,  # **************当前所在详细地址（自行填写）
                 'myvs_24': '否',  # 15. 您是否为当日返郑人员?
-                'myvs_26': vaccine,  # 16. 您当前疫苗接种情况?（接种一针写1，接种两针写2，未接种写3，有禁忌症未接种写4）
+                # 'myvs_26': vaccine,  # 16. 您当前疫苗接种情况?（接种一针写1，接种两针写2，未接种写3，有禁忌症未接种写4）
                 'memo22': '成功获取',  # 地理位置（此项无需更改）
                 'did': '2',
                 'door': '',

@@ -154,7 +154,7 @@ def detect_CAPTCHA_ez(url: str):
             headers=header)
         response_json = json.loads(response_data.text)
         times += 1
-        if response_json["words_result_num"] is not 1:
+        if response_json["words_result_num"] != 1:
             continue
         for i in response_json["words_result"][0]["words"]:
             if "0" <= i <= "9":
