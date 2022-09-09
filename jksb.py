@@ -78,9 +78,9 @@ def run():
             fun3 = re.search('(?<=fun3" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             ptopid = re.search('(?<=ptopid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             sid = re.search('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
-            CAPTCHA_url = re.search('(?<=<img src=").*?zzjlogin3d.*?p2p=.*?(?=")', response_data.data.decode())
+            # CAPTCHA_url = re.search('(?<=<img src=").*?zzjlogin3d.*?p2p=.*?(?=")', response_data.data.decode())
+            # logger.debug("验证码链接为："+CAPTCHA_url.group())
             logger.debug("页面中fun118参数值为："+fun118)
-            logger.debug("验证码链接为："+CAPTCHA_url.group())
 
             data_jksb = {
                 # 'myvs_94c': utils.detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
