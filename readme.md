@@ -64,6 +64,7 @@ docker run -d -e jksb_username=学号 \
               -e jksb_send_type=通知类型 \
               -e jksb_send_parameter=通知参数 \
               -e jksb_timer=运行时间 \
+              --restart always \
               yannzhou/zzu_auto_jksb:latest
 ```
 如您想自己构建docker镜像：
@@ -133,11 +134,11 @@ zhb_parameter: （已废弃，不要使用该参数）郑好办查询参数
 - jksb_jingdu与jksb_weidu：在这个网站中拾取经纬度后填入即可：https://jingweidu.bmcx.com/
 - jksb_send_type：共有三种：{email, serverchan, bark}，配置该参数的目的是在打卡完成后给您发送通知，请尽量使用serverchan方式进行通知，出错概率较低。
 - jksb_send_parameter：与上一项搭配使用。  
-send_type为bark与serverchan时，该项为推送URL，  
+send_type为bark时，该项为推送URL，  
 send_type为serverchan时，该项为SCT开头的sendkey  
-send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}  
+send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱授权码", "receiver": "接收邮件的邮箱"}  
 *例如当您使用sereverchan模式时，jksb_send_type=serverchan, jksb_send_parameter=SCTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*  
-*当您使用email模式时，jksb_send_type=email, jksb_send_parameter={"host": "smtp.163.com", "user": "example@163.com, "password": "yourPassword", "receiver": "example@163.com"}*
+*当您使用email模式时，jksb_send_type=email, jksb_send_parameter={"host": "smtp.163.com", "user": "example@163.com, "password": "yourIdentifyCode", "receiver": "example@163.com"}*
 - ~~zhb_parameter相关参数：默认情况下，脚本会将核酸检测情况填写为“做了”，如您想自动采集核酸检测信息，请使用fiddler抓取您使用手机扫描任一场所码时对URL `https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info` 发送的请求中"param"项的参数填到此处即可。~~
 - ~~jksb_baidu_API_Key：百度手写文字识别APIKey~~  
   ~~jksb_baidu_Secret_Key：百度手写文字识别SecretKey~~
