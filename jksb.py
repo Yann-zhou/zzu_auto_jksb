@@ -132,8 +132,8 @@ def run():
                 utils.send_message(re.search('同学.*?(?=<)', response_data.data.decode()).group())
                 logger.info("打卡成功！")
             else:
-                utils.send_message("打卡失败！")
-                logger.error("打卡失败！")
+                utils.send_message("打卡失败！网页提示信息为："+str(re.search('(?<=line-height:26px;float:left;">).*?(?=</div><div style="width:10px)', response_data.data.decode()).group()))
+                logger.error("打卡失败！网页提示信息为："+str(re.search('(?<=line-height:26px;float:left;">).*?(?=</div><div style="width:10px)', response_data.data.decode()).group()))
     except Exception as err:
         utils.send_message("程序运行异常！错误信息："+str(err))
 
