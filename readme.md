@@ -39,9 +39,9 @@ jksb_send_parameter     根据send_type进行选择，
                         send_type为bark时，该项为推送URL，
                         send_type为serverchan时，该项为SCT开头的sendkey
                         send_type为email时，该项格式为：{"host": "smtp服务器地址", "user": "邮箱登录名", "password": "邮箱密码", "receiver": "接收邮件的邮箱"}
-jksb_baidu_API_Key      百度手写文字识别APIKey
-jksb_baidu_Secret_Key   百度手写文字识别SecretKey
-jksb_zhb_parameter      （已被打卡系统废弃）郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
+jksb_baidu_API_Key      （已废弃，不要使用该参数）百度手写文字识别APIKey
+jksb_baidu_Secret_Key   （已废弃，不要使用该参数）百度手写文字识别SecretKey
+jksb_zhb_parameter      （已废弃，不要使用该参数）郑好办核酸检测查询抓包内容，留空则默认将“昨天是否进行过核酸检测”项填写为“做了”
 jksb_logger_level       （可选）日志等级
 ```
 参数填写规则请参考[参数填写详细规则](#1)
@@ -64,8 +64,6 @@ docker run -d -e jksb_username=学号 \
               -e jksb_send_type=通知类型 \
               -e jksb_send_parameter=通知参数 \
               -e jksb_timer=运行时间 \
-              -e jksb_baidu_API_Key=百度手写文字识别APIKey \
-              -e jksb_baidu_Secret_Key=百度手写文字识别SecretKey \
               yannzhou/zzu_auto_jksb:latest
 ```
 如您想自己构建docker镜像：
@@ -93,9 +91,9 @@ jksb_jingdu: 经度
 jksb_weidu: 纬度
 jksb_send_type: 通知类型
 jksb_send_parameter: 通知参数
-jksb_baidu_API_Key:      百度手写文字识别APIKey
-jksb_baidu_Secret_Key:   百度手写文字识别SecretKey
-zhb_parameter: （已被打卡系统废弃）郑好办查询参数
+jksb_baidu_API_Key: （已废弃，不要使用该参数）百度手写文字识别APIKey
+jksb_baidu_Secret_Key: （已废弃，不要使用该参数）百度手写文字识别SecretKey
+zhb_parameter: （已废弃，不要使用该参数）郑好办查询参数
 ```
 ---
 
@@ -141,8 +139,8 @@ send_type为email时，该项格式为：{"host": "smtp服务器地址", "user":
 *例如当您使用sereverchan模式时，jksb_send_type=serverchan, jksb_send_parameter=SCTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*  
 *当您使用email模式时，jksb_send_type=email, jksb_send_parameter={"host": "smtp.163.com", "user": "example@163.com, "password": "yourPassword", "receiver": "example@163.com"}*
 - ~~zhb_parameter相关参数：默认情况下，脚本会将核酸检测情况填写为“做了”，如您想自动采集核酸检测信息，请使用fiddler抓取您使用手机扫描任一场所码时对URL `https://unified-area-code-n-service.jianguan.henan.gov.cn/nucleicapi/nucvac/info` 发送的请求中"param"项的参数填到此处即可。~~
-- jksb_baidu_API_Key：百度手写文字识别APIKey  
-  jksb_baidu_Secret_Key：百度手写文字识别SecretKey
+- ~~jksb_baidu_API_Key：百度手写文字识别APIKey~~  
+  ~~jksb_baidu_Secret_Key：百度手写文字识别SecretKey~~
 
 
 ---
@@ -163,7 +161,7 @@ send_type为email时，该项格式为：{"host": "smtp服务器地址", "user":
 ---
 
 ## 三、待添加功能
-- [x] 自动采集郑好办核酸检测信息(不稳定)
+- [x] 自动采集郑好办核酸检测信息
 - [x] docker支持
 - [x] Github Actions支持
 - [x] 验证码识别

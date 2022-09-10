@@ -15,8 +15,8 @@ send_parameter = os.getenv('jksb_send_parameter')   # send_type为email时，sen
 zhb_parameter = os.getenv('jksb_zhb_parameter')
 logger_level = os.getenv('jksb_logger_level')
 jksb_timer = os.getenv('jksb_timer')
-baidu_API_Key = os.getenv("jksb_baidu_API_Key")
-baidu_Secret_Key = os.getenv("jksb_baidu_Secret_Key")
+# baidu_API_Key = os.getenv("jksb_baidu_API_Key")
+# baidu_Secret_Key = os.getenv("jksb_baidu_Secret_Key")
 
 # 检查参数是否都有值
 if username is None:
@@ -39,10 +39,10 @@ if send_type is None:
     raise Exception("参数jksb_send_type无值")
 if send_parameter is None:
     raise Exception("参数jksb_send_parameter无值")
-if baidu_API_Key is None:
-    raise Exception("参数jksb_baidu_API_Key无值")
-if baidu_Secret_Key is None:
-    raise Exception("参数jksb_baidu_Secret_Key无值")
+# if baidu_API_Key is None:
+#     raise Exception("参数jksb_baidu_API_Key无值")
+# if baidu_Secret_Key is None:
+#     raise Exception("参数jksb_baidu_Secret_Key无值")
 
 # 设置日志等级
 if logger_level == 'DEBUG':
