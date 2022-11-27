@@ -43,7 +43,7 @@ def run():
             logger.info("开始今日打卡进程...")
             did = re.search('(?<=did" value=")[0-9a-zA-Z]*(?=")', response_data[1]).group()
             door = re.search('(?<=door" value=")[0-9a-zA-Z]*(?=")', response_data[1]).group()
-            fun18 = re.search('(?<=fun18" value=")[0-9a-zA-Z]*(?=")', response_data[1]).group()
+            fun218 = re.search('(?<=fun218" value=")[0-9a-zA-Z]*(?=")', response_data[1]).group()
             sid1 = re.findall('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data[1])[0]
             sid2 = re.findall('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data[1])[1]
             men6 = re.search('(?<=men6" value=")[0-9a-zA-Z]*(?=")', response_data[1]).group()
@@ -51,7 +51,7 @@ def run():
 
             logger.debug("jksb页面中did参数值为："+did)
             logger.debug("jksb页面中door参数值为："+door)
-            logger.debug("jksb页面中fun18参数值为："+fun18)
+            logger.debug("jksb页面中fun218参数值为："+fun218)
             logger.debug("jksb页面中sid1参数值为："+sid1)
             logger.debug("jksb页面中men6参数值为："+men6)
             logger.debug("jksb页面中ptopid参数值为："+ptopid)
@@ -60,7 +60,7 @@ def run():
             data_jksb_info = {
                 'did': did,
                 'door': door,
-                'fun18': fun18,
+                'fun218': fun218,
                 'sid': [sid1, sid2],
                 'men6': men6,
                 'ptopid': ptopid,
@@ -74,13 +74,13 @@ def run():
             # ----------------------------提交信息页面----------------------------
             sheng6 = re.search('(?<=sheng6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             shi6 = re.search('(?<=shi6" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
-            fun118 = re.search('(?<=fun118" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode()).group()
+            fun218 = re.search('(?<=fun218" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode()).group()
             fun3 = re.search('(?<=fun3" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             ptopid = re.search('(?<=ptopid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             sid = re.search('(?<=sid" value=")[0-9a-zA-Z]*(?=")', response_data.data.decode())
             # CAPTCHA_url = re.search('(?<=<img src=").*?zzjlogin3d.*?p2p=.*?(?=")', response_data.data.decode())
             # logger.debug("验证码链接为："+CAPTCHA_url.group())
-            logger.debug("页面中fun118参数值为："+fun118)
+            logger.debug("页面中fun218参数值为："+fun218)
 
             data_jksb = {
                 # 'myvs_94c': utils.detect_CAPTCHA(CAPTCHA_url.group()),  # 使用百度API识别验证码
@@ -110,7 +110,7 @@ def run():
                 'men6': 'a',
                 'sheng6': sheng6.group() if sheng6 else None,  # 此项从上方返回中找值
                 'shi6': shi6.group() if shi6 else None,  # 此项从上方返回中找值
-                'fun118': fun118,  # 此项从上方返回中找值
+                'fun218': fun218,  # 此项从上方返回中找值
                 'fun3': fun3.group() if fun3 else None,  # 此项从上方返回中找值
                 'jingdu': jingdu,  # **************此项填所在地经度
                 'weidu': weidu,  # **************此项填所在地纬度

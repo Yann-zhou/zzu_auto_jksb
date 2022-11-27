@@ -19,7 +19,7 @@ from urllib.parse import urlencode
 # from base64 import b64encode
 
 logging.basicConfig(level=logger_level, format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-logger = logging.getLogger('jksb_tools')
+logger = logging.getLogger('jksb_utils')
 urllib3.disable_warnings()
 http = urllib3.PoolManager(cert_reqs='CERT_NONE', ssl_version=PROTOCOL_TLSv1_2)
 # requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions)
