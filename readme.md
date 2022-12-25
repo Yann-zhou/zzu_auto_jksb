@@ -1,3 +1,8 @@
+---
+### 由于国家政策的调整以及学校相关措施的落实，现在学校已不进行每日打卡，该项目从2022年12月25日起停止更新，希望大家做好防护，祝大家有一个健康强健的身体，有缘再见！
+
+---
+
 # ZZU_auto_jksb
 
 [![Build Docker Image](https://github.com/Yann-zhou/zzu_auto_jksb/actions/workflows/build_docker_image.yml/badge.svg)](https://github.com/Yann-zhou/zzu_auto_jksb/actions/workflows/build_docker_image.yml)
@@ -15,6 +20,7 @@
 ---
 ### 更新日志
 
+- 2022.12.25 停止项目的所有功能
 - 2022.11.27 更新打卡系统参数名称
 - 2022.09.09 打卡系统删除了验证码
 - 2022.09.07 打卡系统验证码变更为了手写汉字，增加对应的手写汉字识别功能
